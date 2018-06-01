@@ -87,25 +87,39 @@
   <div class="col-md-12">
     <table class="table table-striped table-hover">
       <tr>
-        <th>Name</th>
-        <th>Cuisine</th>
-        <th>Actions</th>
+        <th>The very best...</th>
+        <th>is at...</th>
+        <th></th>
       </tr>
 
       <% @dishes.each do |dish| %>
       <tr>
-        <td><%= dish.name %></td>
+        <td><a href = "/dishes/<%= dish.id %>"><%= dish.name %></a></td>
+        <td>
+          <% if dish.fans.pluck(:id).include? current_user.id %>
+            <% bookmark_fav = Bookmark.where("user_id = ? AND dish_id = ?", current_user.id, dish.id).first %>
+            <a href="/venues/<%= bookmark_fav[:venue_id]%>">
+            <%= Venue.find(bookmark_fav[:venue_id]).name %>
+            </a>
+          <% else %>
+          
+            <%= select_tag(:venue_id, options_from_collection_for_select(Venue.all, :id, :name, current_user.id), :prompt => "Please Select" ,  :class => "form-control") %>
+
+          <% end %>               
+
+        </td>
         <td>
           <% if dish.cuisine.present? %>
             <a href="/cuisines/<%= dish.cuisine.id %>">
               <%= dish.cuisine.name %>
             </a>
-          <% end %>
-        </td>
-        <td>
-          <a href="/dishes/<%= dish.id %>" class="btn btn-primary">Show</a>
-          <a href="/dishes/<%= dish.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_dish/<%= dish.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          <% end %>          
+          
+          
+          <!--      Commented out old show/edit/delete pages incase we needed functionality in the future (especially the rel="nofollow" reference??)
+          <a href="/dishes/<#%= dish.id %>" class="btn btn-primary">Show</a>
+          <a href="/dishes/<#%= dish.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_dish/<#%= dish.id %>" class="btn btn-danger" rel="nofollow">Delete</a>-->
         </td>
       </tr>
       <% end %>
