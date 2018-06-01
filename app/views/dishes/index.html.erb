@@ -1,19 +1,16 @@
-<div class="page-header">
-  <h1>
-    Dishes
-    <a href="/dishes/new" class="btn btn-lg btn-success">New Dish</a>
-  </h1>
-</div><div class="row mb-1">
-  <div class="col-md-12">
+
+
+<div class="row mb-1 mt-3">
+  <div class="col-md-3">
     <%= search_form_for @q, :class => "collapse", :id => "dishes_filters" do |f| %>
       <p class="lead">Narrow results:</p>
 
         <div class="form-group">
-    <%= f.label :name_cont, "Name contains" %>
-    <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Name contains" %>
-  </div>
+          <%= f.label :name_cont, "Name contains" %>
+          <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Name contains" %>
+        </div>
 
-<div class="form-group">
+        <div class="form-group">
           <%= f.label :created_at, "Created at" %>
           <div class="row">
             <div class='col-md-6 mb-1'>
@@ -34,7 +31,7 @@
               </div>
             </div>
           </div>
-      </div>
+         </div>
       <script type="text/javascript">
           $(function () {
               $('#created_atgteqPicker').datetimepicker({
@@ -81,10 +78,9 @@
       Show Filters
     </a>
   </div>
-</div>
 
-<div class="row">
-  <div class="col-md-12">
+
+  <div class="col-md-6">
     <table class="table table-striped table-hover">
       <tr>
         <th>The very best...</th>
@@ -102,18 +98,36 @@
             <%= Venue.find(bookmark_fav[:venue_id]).name %>
             </a>
           <% else %>
+          <form action="/create_bookmark" method="post" class="form-inline">
+              <input type="hidden" name="dish_id" value = <%= dish.id %> >
+              <%= select_tag(:venue_id, options_from_collection_for_select(Venue.all, :id, :name), :prompt => "Please Select" ,  :class => "form-control") %>
+              <input type="hidden" name="user_id" value = <%= current_user.id %> >
+              <input type="hidden" name="notes" value = <%= nil %> >
+              
+              
+              <span>
+                <button class="btn btn-primary btn-sm ml-1">
+                <i class="fa fa-heart"></i>
+                </button>
+              </span>
+
+            </form>
           
-            <%= select_tag(:venue_id, options_from_collection_for_select(Venue.all, :id, :name, current_user.id), :prompt => "Please Select" ,  :class => "form-control") %>
+            
 
           <% end %>               
 
         </td>
-        <td>
+        <td class = "text-right ">
+         <div class = "badge badge-primary">
           <% if dish.cuisine.present? %>
-            <a href="/cuisines/<%= dish.cuisine.id %>">
+
               <%= dish.cuisine.name %>
-            </a>
-          <% end %>          
+
+          <% end %>        
+           
+         </div>
+  
           
           
           <!--      Commented out old show/edit/delete pages incase we needed functionality in the future (especially the rel="nofollow" reference??)
@@ -125,5 +139,13 @@
       <% end %>
     </table>
     <%= paginate @dishes, theme: 'twitter-bootstrap-4' %>
+  </div>
+  
+  <div class="col-md-3">
+    <a href = "/venues/new">
+    <button class="btn btn-success btn-block">
+      Add a new venue
+    </button>
+    </a>
   </div>
 </div>
