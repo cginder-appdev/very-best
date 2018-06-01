@@ -96,16 +96,21 @@
       <tr>
         <td><a href = "/dishes/<%= dish.id %>"><%= dish.name %></a></td>
         <td>
+          
+
+        </td>
+        <td>
           <% if dish.cuisine.present? %>
             <a href="/cuisines/<%= dish.cuisine.id %>">
               <%= dish.cuisine.name %>
             </a>
-          <% end %>
-        </td>
-        <td>
-          <a href="/dishes/<%= dish.id %>" class="btn btn-primary">Show</a>
-          <a href="/dishes/<%= dish.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_dish/<%= dish.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          <% end %>          
+          
+          
+          <!--      Commented out old show/edit/delete pages incase we needed functionality in the future (especially the rel="nofollow" reference??)
+          <a href="/dishes/<#%= dish.id %>" class="btn btn-primary">Show</a>
+          <a href="/dishes/<#%= dish.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_dish/<#%= dish.id %>" class="btn btn-danger" rel="nofollow">Delete</a>-->
         </td>
       </tr>
       <% end %>
