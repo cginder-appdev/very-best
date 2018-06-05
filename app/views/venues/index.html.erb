@@ -92,17 +92,16 @@
       <div id="location_map" style="height: 360px;"></div>
     </div>
     
-    <% @venues.each do |venue| %>
+    <% bookmarks = Bookmark.where( :user_id => current_user.id) %>
+    <% bookmarks.each do |bookmark| %>
     <ul class="list-group list-group-flush"> 
       <li class="list-group-item"> 
-      <a href ="venues/<%=venue.id%>"> 
-      <%= venue.name %>
+      <a href ="venues/<%=Venue.find(bookmark.venue_id).id%>"> 
+      <%= Venue.find(bookmark.venue_id).name %>
       </a>
       <small class="text-muted-fload-right"> 
-      <%= venue.address %>
-      <% if venue.neighborhood.present? %>
-      <%= venue.neighborhood.name %>
-      <% end %>
+      <% neighborhood_id = Venue.find(bookmark.venue_id).neighborhood_id %>
+      <%= Neighborhood.find(neighborhood_id).name %>, <%= Neighborhood.find(neighborhood_id).city %>
       </small>
       </li>
     </ul>
