@@ -1,8 +1,76 @@
-<div class="page-header">
-  <h3>Dish #<%= @dish.id %></h3>
-</div>
+<div class="row mt-4">
+  <div class="col-md-3">
+    
+  </div>
+  <div class="col-md-6">
+    <table class="table">
+      <tr class = "table-light">
+        <th >
+            You loved the <%= @dish.name %> at...
+        </th>
+        <th class = "text-right ">
+          <div class = "badge badge-primary">
+            <% if @dish.cuisine.present? %>
+              <%= @dish.cuisine.name %>
+            <% end %>        
+          </div>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <form action="/create_bookmark" method="post" class="form-inline">
+            <input type="hidden" name="dish_id" value = <%= @dish.id %> >
+            <%= select_tag(:venue_id, options_from_collection_for_select(Venue.all, :id, :name), :prompt => "Please Select" ,  :class => "form-control") %>
+            <input type="hidden" name="user_id" value = <%= current_user.id %> >
+            <input type="hidden" name="notes" value = <%= nil %> >
+            <span>
+              <button class="btn btn-primary ml-1">
+              <i class="fa fa-heart"></i>
+              </button>
+            </span>
+          </form>
+        </td>
+        <td class = "text-right text-secondary">
+          <small>
+            right now
+          </small>
+        </td>
+      </tr>
+      <% @dish.specialists.each do |venue| %>
+        <tr>
+          <td>
+            <a href="/venues/<%= venue.id %>">
+              <%= venue.name %>
+            </a>
+          </td>
+          <td class = "text-secondary text-right">
+            <small>
+              Time ago text
+            </small>
+            <span>
+              <a href="/venues/<%= venue.id %>/edit">
+                <i class="fa fa-fw fa-edit ml-1"></i>
+              </a>
+              <a href="/delete_venue/<%= venue.id %>" rel="nofollow">
+                <i class="fa fa-fw fa-trash-o"></i>
+              </a>
+           </span>
+          </td>
+        </tr>
+      <% end %>
 
-<div class="row">
+    </table>
+  </div>
+  <div class="col-md-3">
+    
+  </div>  
+  
+  
+  
+  
+  
+  
+  
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>Name</dt>
