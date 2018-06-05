@@ -99,7 +99,7 @@
       <a href ="venues/<%=Venue.find(bookmark.venue_id).id%>"> 
       <%= Venue.find(bookmark.venue_id).name %>
       </a>
-      <small class="text-muted-fload-right"> 
+      <small class="text-muted float-right"> 
       <% neighborhood_id = Venue.find(bookmark.venue_id).neighborhood_id %>
       <%= Neighborhood.find(neighborhood_id).name %>, <%= Neighborhood.find(neighborhood_id).city %>
       </small>
