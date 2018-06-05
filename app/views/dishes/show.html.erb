@@ -40,18 +40,19 @@
           </small>
         </li>
         
-        <% @dish.specialists.each do |venue| %>
+        <% bookmarks = Bookmark.where( :user_id => current_user.id, :dish_id => @dish.id) %>
+        <% bookmarks.each do |bookmark| %>
         <li class="list-group-item">
           <p> 
-          <a href="/venues/<%=venue.id%>"> 
-            <%= venue.name %>
+          <a href="/venues/<%=bookmark.venue_id%>"> 
+            <%= Venue.find(bookmark.venue_id).name %>
           </a>
           <small class="float-right text-muted">
-               <%= time_ago_in_words(venue.updated_at) %>
-            <a href="/bookmarks/<%=venue.id %>/edit">
+               <%= time_ago_in_words(bookmark.updated_at) %>
+            <a href="/bookmarks/<%=bookmark.id %>/edit">
               <i class="fa fa-fw fa-edit"></i>
             </a>
-            <a href="/delete_bookmark/<%= venue.id %>">
+            <a href="/delete_bookmark/<%= bookmark.id %>">
               <i class="fa fa-fw fa-trash-o"></i>
             </a>
           </small>
@@ -72,7 +73,6 @@
 </div>
 
 </div> 
-
 
 
 
