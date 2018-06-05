@@ -100,7 +100,8 @@
       <%= Venue.find(bookmark.venue_id).name %>
       </a>
       <small class="text-muted-fload-right"> 
-      
+      <% neighborhood_id = Venue.find(bookmark.venue_id).neighborhood_id %>
+      <%= Neighborhood.find(neighborhood_id).name %>, <%= Neighborhood.find(neighborhood_id).city %>
       </small>
       </li>
     </ul>
