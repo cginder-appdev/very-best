@@ -29,6 +29,7 @@
               <%= Dish.find(bookmark.dish_id).name %>
             </a>
             <small class="float-right text-muted">
+              <%= time_ago_in_words(bookmark.updated_at) %>
               <a href="/bookmarks/<%= bookmark.id %>/edit">
                 <i class="fa fa-fw fa-edit"></i>
               </a> 
