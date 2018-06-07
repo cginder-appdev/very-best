@@ -38,6 +38,9 @@
               </a> 
             </small>
           </p>
+          <p>
+            <%= bookmark.notes %>
+          </p>
         </li>
         <% end %>
         
@@ -74,10 +77,16 @@
         <li class="list-group-item list-group-item-success">
           Popular dishes here
         </li>
+        
+        <% dish_array = [ ] %>
         <% @venue.bookmarks.each do |bookmark| %>
+        <% dish_array.append(bookmark.dish_id) %>
+        <% end %>
+        <% dish_array = dish_array.uniq %>
+        <% dish_array.each do |id| %>
         <li class="list-group-item">
-        <a href="/dishes/<%=bookmark.dish_id%>"> 
-        <%= Dish.find(bookmark.dish_id).name %>
+        <a href="/dishes/<%=id%>"> 
+        <%= Dish.find(id).name %>
         </a>
         </li>
         <% end %>
